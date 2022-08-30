@@ -38,13 +38,21 @@ def coordinate(address):
 
     iframe = driver.find_element(By.XPATH, '//*[@id="agreement_mask"]')
     driver.switch_to.frame(iframe)
+    """
+    iframe に移動
+    """
     time.sleep(5)
     driver.find_element(By.XPATH, '//*[@id="agree_btn_area"]/ul/li[1]/a').click()
     driver.switch_to.default_content()
+    """
+    同意画面クリック
+    """
     time.sleep(5)
     driver.find_element(By.XPATH, '//*[@id="footer"]/div[1]/a[21]').click()
+    """
+    縮尺変更
+    """
     time.sleep(5)
     FILENAME = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..\images\gesui.png")
 
     driver.save_screenshot(FILENAME)
-coordinate('埼玉県さいたま市浦和区高砂3丁目15-1')
