@@ -56,5 +56,3 @@ def coordinate(address):
     FILENAME = os.path.join(os.path.abspath(os.path.dirname(__file__)), "..\images\doro.png")
 
     driver.save_screenshot(FILENAME)
-
-coordinate("埼玉県さいたま市浦和区常盤６丁目４−４")
