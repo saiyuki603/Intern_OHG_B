@@ -11,60 +11,15 @@ import pandas as pd
 import re
 import os
 
-content = input()
-
-if '市' in content:
-  m = re.search('市', content)
-  m1 =m.end()
-  content = content[:m1]+' '+content[m1:]
-
-if '区' in content:
-  n = re.search('区', content)
-  n1 = n.end()
-  content = content[:n1]+' '+content[n1:]
-
-if '町' in content:
-  v = re.search('町', content)
-  v1 = v.end()
-  content = content[:v1]+' '+content[v1:]
-
-if '丁目' in content:
-  b = re.search('丁目', content)
-  b1 = b.end()
-  content = content[:b1]+' '+content[b1:]
-  b = re.search('丁目', content)
-  b2 = b.start() -1 
-  content = content[:b2]+' '+content[b2:]
-
-if 'r"\d+"' in content:
-  z = re.search('r"\d+"', content)
-  z1 = z.start()-1
-  content = content[:z1]+' '+content[z1:]
-
-list2 = re.findall(r'\d+', content)
-l = re.search(list2[0], content)
-l1= l.start()-1
-content = content[:l1]+' '+content[l1:]
-
-list =content.split()
-print(list)
-
-
+list = ['千葉県千葉市','中央区','今井','２','１０']
 
 
 if list[0] == '千葉県千葉市':
-  if len(list)<5:
-    s1 = list[1]
-    s2 = list[2]
-    s3 = '丁目なし'
-    s4 = list[3]
-  else:
-    s1 = list[1]
-    s2 = list[2]
-    s3 = list[3]
-    s4 = list[4]
   
-
+  s1 = list[1]
+  s2 = list[2]
+  s3 = list[3]
+  s4 = list[4]
   driver = webdriver.Chrome()
   driver.get("http://s-page.tumsy.com/chibagesui/index.html")
   time.sleep(5)
@@ -90,15 +45,29 @@ if list[0] == '千葉県千葉市':
   select = Select(d2)
   select.select_by_visible_text(s2)
   time.sleep(5)
+
   d3 = driver.find_element(By.XPATH,"//*[@id='ELM_CMB_LEV3']")
   select = Select(d3)
-  select.select_by_visible_text(s3)
-  time.sleep(5)
-  d4 = driver.find_element(By.XPATH,"//*[@id='ELM_CMB_LEV4']")
-  select = Select(d4)
-  time.sleep(5)
-  select.select_by_visible_text(s4)
-  time.sleep(5)
+  selected = select.all_selected_options
+
+  if selected[0].text =="丁目なし":
+    time.sleep(2)
+    d4 = driver.find_element(By.XPATH,"//*[@id='ELM_CMB_LEV4']")
+    select = Select(d4)
+    s4 = s3 + "番地"
+    select.select_by_visible_text(s4)
+    time.sleep(5)
+  else:
+    d3 = driver.find_element(By.XPATH,"//*[@id='ELM_CMB_LEV3']")
+    select = Select(d3)
+    s3 = s3 + "丁目"
+    select.select_by_visible_text(s3)
+    time.sleep(5)
+    d4 = driver.find_element(By.XPATH,"//*[@id='ELM_CMB_LEV4']")
+    select = Select(d4)
+    s4 = s4 + "番"
+    select.select_by_visible_text(s4)
+    time.sleep(5)
 
   actionChains.click(driver.find_element(By.XPATH,"//*[@id='btnAddSchDlgOK']")).perform()
   time.sleep(5)
