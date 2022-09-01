@@ -30,7 +30,7 @@ def coordinate(address):
     """
     埼玉の下水を検索・スクショ
     """
-    doro_url = 'https://www.sonicweb-asp.jp/saitama_g/map?theme=th_31#scale=2500#pos=' + longitude + ',' + latitude
+    doro_url = 'https://www.sonicweb-asp.jp/saitama_g/map?theme=th_31#scale=1000#pos=' + longitude + ',' + latitude
     driver = webdriver.Chrome()
 
     driver.get(doro_url)
